@@ -7,8 +7,7 @@ class Atm {
     private int id;
     private String pass;
     private int amount;
-    
-    
+
     static Scanner input = new Scanner(System.in);
     static ArrayList<Atm> at = new ArrayList<>(); // List to store all accounts
 
@@ -43,7 +42,7 @@ class Atm {
         while (choice.equals("yes")) {
             at.add(new Atm());
             System.out.println("Success :) ");
-            System.out.println(" Do you want another Acount (yes.no)");
+            System.out.println(" Do you want add another Acount (yes.no)");
             choice = input.next().toLowerCase();
         }
     }
@@ -57,42 +56,53 @@ class Atm {
             addClient();
         else if (choice.equals("yes")) {
 
-            if (search()) {
-                if (pass_check(client)) {
-                    String choice_contianu2 = "yes";
-                    while (choice_contianu2.equals("yes")) {
-                        System.out
+            while (choice_contianu.equals("yes")) {
+                if (search()) {
+                    if (pass_check(client)) {
+                        String choice_contianu2 = "yes";
+                        while (choice_contianu2.equals("yes")) {
+                            System.out
 
-                                .println(
-                                        "Hello , " + client.getName() + " Do you want take or add money ? (take/add) ");
-                        choice = input.next();
-                        if (choice.equals("take")) {
-                            client.take();
-
-                            System.out.println("Do you want anothar process ");
-                            choice_contianu2 = input.next();
-
-                        } else if (choice.equals("add")) {
-                            client.add();
-                            System.out.println("Do you want anothar process ");
-                            choice_contianu2 = input.next();
-                        } else {
-                            System.out.println("Not valid");
-                            System.out.println("Do you want contianue");
-                            choice_contianu2 = input.next();
+                                    .println(
+                                            "Hello , " + client.getName()
+                                                    + " Do you want take or add money ? (take/add) ");
+                            choice = input.next();
+                            if (choice.equals("take")) {
+                                client.take();
+                                client.display();
+                                System.out.println("Do you want anothar process ");
+                                choice_contianu2 = input.next();
+                                choice_contianu = "no";
+                            } else if (choice.equals("add")) {
+                                client.add();
+                                client.display();
+                                System.out.println("Do you want anothar process ");
+                                choice_contianu2 = input.next();
+                                choice_contianu = "no";
+                            } else {
+                                System.out.println("Not valid");
+                                System.out.println("Do you want try again");
+                                choice_contianu2 = input.next();
+                                choice_contianu = "no";
+                            }
                         }
-                    }
-                }
+                    } else {
+                        System.out.println("Wrong pass");
+                        System.out.println("do you want try again");
+                        choice_contianu = input.next();
 
-            } else {
-                System.out.println("Sorry , id not exist ");
-                System.out.println("Do you want try again ");
-                choice_contianu = input.next();
+                    }
+
+                } else {
+                    System.out.println("Sorry , id not exist ");
+                    System.out.println("Do you want try again ");
+                    choice_contianu = input.next();
+                }
             }
         } else {
             System.out.println("not valid");
-            System.out.println("Do you want try again ");
-            choice_contianu = input.next();
+            System.out.println(" try again ");
+
         }
 
     }
@@ -107,7 +117,7 @@ class Atm {
     public void setName() {
         input.nextLine();
         System.out.println("enter your name ");
-        input.nextLine();
+
         String name = input.nextLine();
         this.name = name;
 
@@ -170,6 +180,11 @@ class Atm {
             System.out.println("Success :)");
             amount -= take;
         }
+    }
+
+    public void display() {
+        System.out.printf("Info : \n Name : " + getName() + "\n Acount balance : " + getAmount() + "\n");
+
     }
 
     public String getPass() {
